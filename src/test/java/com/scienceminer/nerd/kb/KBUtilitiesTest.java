@@ -1,9 +1,11 @@
 package com.scienceminer.nerd.kb;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Map;
 
 public class KBUtilitiesTest {
 	
@@ -50,6 +52,25 @@ System.out.println("Q3200306: " + parents);
 
 			isAnimal = KBUtilities.isAnimal("Q3200306");
 			System.out.println("Q3200306.isAnimal = " + isAnimal);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	@Ignore ("For testing if the MeSH database is built")
+	public void testMesh() {
+		try {
+			// Syndrome de Brown-Séquard (Q991037)
+			Map<String, List<String>> meshUmls = UpperKnowledgeBase.getInstance().getMeshUmls("Q991037");
+			for( Map.Entry<String, List<String>> entry : meshUmls.entrySet() ) {
+				String meshId = entry.getKey();
+				System.out.println("MeSH ID : " + meshId);
+
+				for (String umls : entry.getValue()) {
+					System.out.println("UMLS CUI : " + umls);
+				}
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

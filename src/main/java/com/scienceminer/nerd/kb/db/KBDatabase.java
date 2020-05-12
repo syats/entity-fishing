@@ -290,6 +290,10 @@ public abstract class KBDatabase<K,V> {
 		/**
 		 * Associates a string (entity) to a vector
 		 */
-		entityEmbeddings
+		entityEmbeddings,
+		/**
+		 * Associates a concept id string to a list of concept id strings following the MeSH hierarchy
+		 */
+		mesh
 	}
 }

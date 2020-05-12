@@ -45,6 +45,9 @@ public class KBUpperEnvironment extends KBEnvironment {
 	// loaded only if needed, gives the statements by the tail entity
 	private StatementDatabase dbReverseStatements = null;
 
+	// for MeSH data
+	private MeshDatabase dbMesh = null;
+	
 	/**
 	 * Constructor
 	 */	
@@ -97,6 +100,9 @@ public class KBUpperEnvironment extends KBEnvironment {
 		return dbTaxonParent;
 	}
 
+	// for MeSH data
+	public MeshDatabase getDbMesh() { return dbMesh; }
+
 	@Override
 	protected void initDatabases() {
 		//System.out.println("\ninit upper level language independent environment");
@@ -120,6 +126,10 @@ public class KBUpperEnvironment extends KBEnvironment {
 
 		dbTaxonParent = buildTaxonParentDatabase();
 		databasesByType.put(DatabaseType.taxon, dbTaxonParent);
+
+		// for MeSH data
+		dbMesh =  buildMeshDatabase();
+		databasesByType.put(DatabaseType.mesh,dbMesh);
 	}
 
 	/**
@@ -167,6 +177,10 @@ public class KBUpperEnvironment extends KBEnvironment {
 
 		dbTaxonParent.fillTaxonDbs(dbConcepts, dbStatements, overwrite);
 
+		// for building MeSH data
+		dbMesh.buildMeshDatabase(dbConcepts, dbStatements, overwrite);
+		System.out.println("MeSH Data size - " + dbMesh.getDatabaseSize() + "MeSH IDs");
+
 		System.out.println("Environment built - " + dbConcepts.getDatabaseSize() + " concepts.");
 	}
 
@@ -200,7 +214,11 @@ public class KBUpperEnvironment extends KBEnvironment {
 
 	private TaxonDatabase buildTaxonParentDatabase() {
 		return new TaxonDatabase(this);
-	}	
+	}
+
+	private MeshDatabase buildMeshDatabase() {
+		return new MeshDatabase(this);
+	}
 
 	public Long retrieveStatistic(StatisticName sn) {
 		throw new UnsupportedOperationException();

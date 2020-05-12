@@ -148,6 +148,19 @@ public class UpperKnowledgeBase {
 	}
 
 	/**
+	 * Return the full list of UMLS CUI (P2892) for a given wikidataId
+	 * Unified Medical Language System (UMLS) controlled biomedical vocabulary unique identifier (CUI)
+	 */
+	public Map<String, List<String>> getMeshUmls(String wikidataId) {
+		Map<String, List<String>> meshUmls = env.getDbMesh().retrieve(wikidataId);
+		if (meshUmls == null) {
+			return null;
+		} else {
+			return meshUmls;
+		}
+	}
+
+	/**
 	 * Return the page id corresponding to a given concept id and a target lang
 	 */
 	public Integer getPageIdByLang(String wikidataId, String lang) {
