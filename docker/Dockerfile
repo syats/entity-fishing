@@ -21,3 +21,8 @@ RUN mkdir /fishing
 RUN cd /fishing && git clone https://github.com/kermitt2/nerd
 ADD mention.yaml /fishing/nerd/data/config
 RUN cd /fishing/nerd/ && mvn -DskipTests clean install
+
+WORKDIR /fishing/nerd/
+CMD ["mvn", "jetty:run"]
+
+# docker run --rm --name fishing1 --p 9897:8090 -it fishing
