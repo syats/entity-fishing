@@ -179,7 +179,7 @@ public class KBUpperEnvironment extends KBEnvironment {
 
 		// for building MeSH data
 		dbMesh.buildMeshDatabase(dbConcepts, dbStatements, overwrite);
-		System.out.println("MeSH Data size - " + dbMesh.getDatabaseSize() + "MeSH IDs");
+		System.out.println("MeSH Data size - " + dbMesh.getDatabaseSize() + " MeSH IDs");
 
 		System.out.println("Environment built - " + dbConcepts.getDatabaseSize() + " concepts.");
 	}
