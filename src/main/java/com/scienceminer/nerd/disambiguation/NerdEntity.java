@@ -89,6 +89,9 @@ public class NerdEntity implements Comparable<NerdEntity> {
 	// Wikidata identifier
 	private String wikidataId = null;
 
+	// for MeSH and UMLS CUI references
+	private Map<String, List<String>> meshUmlsList = null;
+
 	// multilingual Wikipedia information
 	private Map<String,String> wikipediaMultilingualRef = null;
 	private Map<String,Integer> wikipediaMultilingualArticle = null;
@@ -381,6 +384,14 @@ public class NerdEntity implements Comparable<NerdEntity> {
         this.wikidataId = ref;
     }
 
+	public Map<String, List<String>> getMeshUmlsList() {
+		return meshUmlsList;
+	}
+
+	public void setMeshUmlsList(Map<String, List<String>> meshUmlsList) {
+		this.meshUmlsList = meshUmlsList;
+	}
+
     public void setBoundingBoxes(List<BoundingBox> boundingBoxes) {
 		this.boundingBoxes = boundingBoxes;
 	}
@@ -654,7 +665,8 @@ public class NerdEntity implements Comparable<NerdEntity> {
 		//freeBaseExternalRef = candidate.getFreeBaseExternalRef();
 		categories = candidate.getWikipediaCategories();
 		statements = UpperKnowledgeBase.getInstance().getStatements(wikidataId);
-
+		// get the MeSH Data
+		meshUmlsList = UpperKnowledgeBase.getInstance().getMeshUmls(wikidataId);
 		preferredTerm = candidate.getPreferredTerm();
 		this.lang = lang;
 	}
@@ -829,6 +841,26 @@ public class NerdEntity implements Comparable<NerdEntity> {
 			buffer.append(" ] ");
 		}
 
+		// MeSH and UMLS CUI references
+		if (MapUtils.isNotEmpty(meshUmlsList) ) {
+			for (Map.Entry<String, List<String>> entry : meshUmlsList.entrySet()) {
+				String meshId = entry.getKey();
+				buffer.append(", \"meshId\" : " + meshId);
+				if (CollectionUtils.isNotEmpty(entry.getValue())) {
+					buffer.append(", \"umlsCUI\" : [ ");
+					boolean first = true;
+					for (String umls : entry.getValue()) {
+						if (first) {
+							buffer.append(umls);
+							first = false;
+						} else
+							buffer.append(", " + umls);
+					}
+					buffer.append(" ] ");
+				}
+			}
+		}
+
 		if (CollectionUtils.isNotEmpty(domains)) {
 			buffer.append(", \"domains\" : [ ");
 			boolean first = true;
@@ -991,6 +1023,26 @@ public class NerdEntity implements Comparable<NerdEntity> {
 
 		if (wikidataId != null)
 			buffer.append(", \"wikidataId\" : \"" + wikidataId + "\"");
+
+		// MeSH and UMLS CUI references
+		if (MapUtils.isNotEmpty(meshUmlsList) ) {
+			for (Map.Entry<String, List<String>> entry : meshUmlsList.entrySet()) {
+				String meshId = entry.getKey();
+				buffer.append(", \"meshId\" : " + meshId);
+				if (CollectionUtils.isNotEmpty(entry.getValue())) {
+					buffer.append(", \"umlsCUI\" : [ ");
+					boolean first = true;
+					for (String umls : entry.getValue()) {
+						if (first) {
+							buffer.append(umls);
+							first = false;
+						} else
+							buffer.append(", " + umls);
+					}
+					buffer.append(" ] ");
+				}
+			}
+		}
 
 		if (domains != null) {
 			buffer.append(", \"domains\" : [ ");
