@@ -30,3 +30,4 @@ data/corpus/corpus-long/aida-train/RawText
 data/corpus/corpus-long/aida-testa/RawText
 data/corpus/corpus-long/aida-testb/RawText
 data/species/*
+docker/data/*
