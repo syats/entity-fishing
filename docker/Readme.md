@@ -1,6 +1,6 @@
 1. Clone repo and `cd [repo-root]/docker`
-3. Build docker image ` `
-4. While this builds, download stuff (here only German (de) is downloaded):
+3. Build docker image ` docker build -t fishing . `
+4. While this builds, download stuff (here only German (de) is downloaded, and the kb file seems to be mandatory):
  `cd [repo-root]/data/db`
  `wget https://science-miner.s3.amazonaws.com/entity-fishing/0.0.3/linux/db-de.zip `
  `wget https://science-miner.s3.amazonaws.com/entity-fishing/0.0.3/linux/db-kb.zip `
