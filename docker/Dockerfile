@@ -23,6 +23,7 @@ ADD mention.yaml /fishing/nerd/data/config
 RUN cd /fishing/nerd/ && mvn -DskipTests clean install
 
 WORKDIR /fishing/nerd/
+#CMD ["mvn","-Dorg.slf4j.simpleLogger.defaultLogLevel=debug", "jetty:run"]
 CMD ["mvn", "jetty:run"]
 
-# docker run --rm --name fishing1 --p 9897:8090 -it fishing
+# docker run --rm --name fishing1 --p 8090:8090 -it fishing
